@@ -341,7 +341,7 @@ I used the defaults for other than these as is.
 
 <h3 id="set_metric">Example of setting visualization of metrics</h3>
 
-Create your first dashboard and create a panel for each metric you want to visualize.
+Create your first dashboard and a panel for each metric you want to visualize.
 In the `Metrics browser`, select the job and its metrics to visualize from the three job_names, set panel properties, add panels, and create the dashboard.
 
 The following is a simple example of setting the panel for the AMF metric `amf_session`.
