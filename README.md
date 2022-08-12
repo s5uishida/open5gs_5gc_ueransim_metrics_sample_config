@@ -136,7 +136,7 @@ Please refer to the following for using Prometheus.
 <h3 id="access_prometheus">Web Access to Prometheus Dashboard</h3>
 
 First, create the following `prometheus.yml`.
-```
+```yaml
 global:
   scrape_interval: 10s
 
