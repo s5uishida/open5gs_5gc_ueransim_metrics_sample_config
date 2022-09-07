@@ -181,7 +181,7 @@ The list of targets is as follows.
 <h3 id="amf_metrics">Metrics of Open5GS AMF</h3>
 
 Following the Endpoint link of job_name=**open5gs-amfd**, the metrics will be displayed as follows.
-```
+```sh
 # HELP ran_ue RAN UEs
 # TYPE ran_ue gauge
 ran_ue 0
@@ -225,7 +225,7 @@ process_open_fds 24
 <h3 id="smf_metrics">Metrics of Open5GS SMF</h3>
 
 Following the Endpoint link of job_name=**open5gs-smfd1**, the metrics will be displayed as follows.
-```
+```sh
 # HELP gn_rx_createpdpcontextreq Received GTPv1C CreatePDPContextRequest messages
 # TYPE gn_rx_createpdpcontextreq counter
 gn_rx_createpdpcontextreq 0
