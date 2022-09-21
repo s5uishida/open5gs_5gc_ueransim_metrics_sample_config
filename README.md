@@ -361,6 +361,7 @@ The following is a simple example of setting the panel for the AMF metric `amf_s
 <img src="./images/grafana-metric.png" title="./images/grafana-metric.png" width=900px></img>
 
 Grafana allows you to freely design user-friendly dashboards by creating attractive panels for each metric and combining them.
+Also, when using Open5GS as EPC, MME(`open5gs-mmed`) supports Prometheus metrics, so you can monitor these metrics by making similar settings.
 
 ---
 I was able to confirm the very simple configuration that uses Open5GS and UERANSIM for monitoring the metrics with Prometheus.
