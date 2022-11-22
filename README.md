@@ -93,6 +93,8 @@ metrics:
 
 <h2 id="build">Build Open5GS for using Prometheus</h2>
 
+**Note. On 2022.11.21, Open5GS now builds to set Prometheus metrics by default.**
+
 Please refer to the following for building Open5GS for using Prometheus.
 - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
 - https://open5gs.org/open5gs/docs/tutorial/04-metrics-prometheus/
