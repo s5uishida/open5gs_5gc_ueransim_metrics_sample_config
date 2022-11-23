@@ -73,21 +73,21 @@ When monitoring the metrics with Prometheus, change the following configuration 
 ```
 ...
 metrics:
-    addr: 192.168.0.111
+  - addr: 192.168.0.111
     port: 9090
 ```
 - `open5gs/install/etc/open5gs/smf1.yaml`
 ```
 ...
 metrics:
-    addr: 192.168.0.112
+  - addr: 192.168.0.112
     port: 9090
 ```
 - `open5gs/install/etc/open5gs/smf2.yaml`
 ```
 ...
 metrics:
-    addr: 192.168.0.113
+  - addr: 192.168.0.113
     port: 9090
 ```
 
