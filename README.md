@@ -59,7 +59,7 @@ The exposed IP address and port of Prometheus and Grafana-OSS are as follows.
 | Server | IP address | port |
 | --- | --- | --- |
 | Prometheus |  192.168.0.111 | 9091/tcp |
-| Grafana-OSS |  192.168.0.111 | 3000/tcp |
+| Grafana-OSS |  192.168.0.111 | 3001/tcp |
 
 <h2 id="changes_cp">Additional changes in configuration files of Open5GS 5GC C-Plane</h2>
 
@@ -335,12 +335,12 @@ I used the OSS version of Grafana.
 
 After starting Open5GS and Prometheus, run Grafana-OSS as follows.
 ```
-docker run -d -p 3000:3000 grafana/grafana-oss
+docker run -d -p 3001:3000 grafana/grafana-oss
 ```
 You can access the following URL with web browser.
 The default username and password are both `admin`.
 ```
-http://192.168.0.111:3000/
+http://192.168.0.111:3001/
 ```
 
 <h3 id="data_source">Prometheus data source</h3>
