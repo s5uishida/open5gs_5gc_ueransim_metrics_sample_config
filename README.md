@@ -2,6 +2,8 @@
 This describes a very simple configuration that uses Open5GS and UERANSIM for monitoring the metrics with Prometheus.
 The metrics are as of 2022.08.07. I think the new metrics will be added in the future.
 
+**Note. On 2022.11.21, Open5GS now builds to set Prometheus metrics by default.**
+
 ---
 
 <h2 id="conf_list">List of Sample Configurations</h2>
