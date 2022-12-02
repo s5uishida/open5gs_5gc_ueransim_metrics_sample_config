@@ -2,8 +2,6 @@
 This describes a very simple configuration that uses Open5GS and UERANSIM for monitoring the metrics with Prometheus.
 The metrics are as of 2022.08.07. I think the new metrics will be added in the future.
 
-**Note. On 2022.11.21, Open5GS now builds to set Prometheus metrics by default.**
-
 ---
 
 <h2 id="conf_list">List of Sample Configurations</h2>
@@ -95,54 +93,11 @@ metrics:
 
 <h2 id="build">Build Open5GS for using Prometheus</h2>
 
-**Note. On 2022.11.21, Open5GS now builds to set Prometheus metrics by default.**
-
 Please refer to the following for building Open5GS for using Prometheus.
 - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
-- https://open5gs.org/open5gs/docs/tutorial/04-metrics-prometheus/
-
-In addition, please install `cmake` as well.
-```
-apt update
-apt install cmake
-```
 
 Please install the following to run Prometheus on Docker.
 - [docker-ce](https://docs.docker.com/install/linux/docker-ce/ubuntu)
-
-**I will explain a few notes when building on Ubuntu 20.04.**
-
-**1. Change the build procedure slightly as follows.**
-
-```
-cd open5gs
-meson build --prefix=`pwd`/install
-ninja -C build
-```
-Change the above to run as follows.
-```
-cd open5gs
-meson build --prefix=`pwd`/install && meson configure -Dmetrics_impl=prometheus build
-ln -s `pwd`/subprojects/ `pwd`/../subprojects
-ninja -C build
-```
-
-**2. After building and installing, if the shared library `libcm_prom.so` is not found in the following NFs, please follow the steps below.**
-```
-open5gs-amfd
-open5gs-smfd
-```
-To link `libcm_prom.so`, do the following.
-```
-cd open5gs
-cp -p install/lib/libcm_prom.so install/lib/x86_64-linux-gnu/
-```
-If these NFs still can't link, try the following.
-```
-cd open5gs
-echo `pwd`/install/lib/x86_64-linux-gnu >> /etc/ld.so.conf.d/open5gs.conf
-ldconfig
-```
 
 <h2 id="run_prometheus">Run Prometheus</h2>
 
