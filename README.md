@@ -1,6 +1,6 @@
 # Open5GS 5GC & UERANSIM UE / RAN Sample Configuration - Monitoring Metrics with Prometheus
 This describes a very simple configuration that uses Open5GS and UERANSIM for monitoring the metrics with Prometheus.
-The metrics are as of 2022.08.07. I think the new metrics will be added in the future.
+The metrics are as of 2022.12.11. I think the new metrics will be added in the future.
 
 ---
 
@@ -24,7 +24,9 @@ The metrics are as of 2022.08.07. I think the new metrics will be added in the f
 - [Run Prometheus](#run_prometheus)
   - [Web Access to Prometheus Dashboard](#access_prometheus)
   - [Metrics of Open5GS AMF](#amf_metrics)
+  - [Metrics of Open5GS PCF](#pcf_metrics)
   - [Metrics of Open5GS SMF](#smf_metrics)
+  - [Metrics of Open5GS UPF](#upf_metrics)
 - [Run Grafana](#run_grafana)
   - [Web Access to Grafana Dashboard](#access_grafana)
   - [Prometheus data source](#data_source)
@@ -45,20 +47,23 @@ NFs without metrics are not drawn in the figure.
 
 The 5GC / UE / RAN used are as follows.
 Also, I started Prometheus and Grafana using Docker.
-- 5GC - Open5GS v2.4.9 - https://github.com/open5gs/open5gs
+- 5GC - Open5GS v2.5.6 - https://github.com/open5gs/open5gs
 - UE / RAN - UERANSIM v3.2.6 - https://github.com/aligungr/UERANSIM
 
 The IP address and port of the monitored NFs are as follows.
 | NF | IP address | port | Prometheus job_name |
 | --- | --- | --- | --- |
 | AMF | 192.168.0.111 | 9090/tcp | open5gs-amfd |
+| PCF | 192.168.0.111 | 9091/tcp | open5gs-pcfd |
 | SMF1 | 192.168.0.112 | 9090/tcp | open5gs-smfd1 |
 | SMF2 | 192.168.0.113 | 9090/tcp | open5gs-smfd2 |
+| UPF1 | 192.168.0.114 | 9090/tcp | open5gs-upfd1 |
+| UPF2 | 192.168.0.115 | 9090/tcp | open5gs-upfd2 |
 
 The exposed IP address and port of Prometheus and Grafana-OSS are as follows.
 | Server | IP address | port |
 | --- | --- | --- |
-| Prometheus |  192.168.0.111 | 9091/tcp |
+| Prometheus |  192.168.0.111 | 9092/tcp |
 | Grafana-OSS |  192.168.0.111 | 3001/tcp |
 
 <h2 id="changes_cp">Additional changes in configuration files of Open5GS 5GC C-Plane</h2>
@@ -76,6 +81,13 @@ metrics:
   - addr: 192.168.0.111
     port: 9090
 ```
+- `open5gs/install/etc/open5gs/pcf.yaml`
+```
+...
+metrics:
+  - addr: 192.168.0.111
+    port: 9091
+```
 - `open5gs/install/etc/open5gs/smf1.yaml`
 ```
 ...
@@ -88,6 +100,20 @@ metrics:
 ...
 metrics:
   - addr: 192.168.0.113
+    port: 9090
+```
+- `open5gs/install/etc/open5gs/upf1.yaml`
+```
+...
+metrics:
+  - addr: 192.168.0.114
+    port: 9090
+```
+- `open5gs/install/etc/open5gs/upf2.yaml`
+```
+...
+metrics:
+  - addr: 192.168.0.115
     port: 9090
 ```
 
@@ -115,20 +141,29 @@ scrape_configs:
   - job_name: open5gs-amfd
     static_configs:
       - targets: ["192.168.0.111:9090"]
+  - job_name: open5gs-pcfd
+    static_configs:
+      - targets: ["192.168.0.111:9091"]
   - job_name: open5gs-smfd1
     static_configs:
       - targets: ["192.168.0.112:9090"]
   - job_name: open5gs-smfd2
     static_configs:
       - targets: ["192.168.0.113:9090"]
+  - job_name: open5gs-upfd1
+    static_configs:
+      - targets: ["192.168.0.114:9090"]
+  - job_name: open5gs-upfd2
+    static_configs:
+      - targets: ["192.168.0.115:9090"]
 ```
 After starting Open5GS, run Prometheus as follows.
 ```
-docker run -d -p 9091:9090 -v `pwd`/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+docker run -d -p 9092:9090 -v `pwd`/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
 ```
 You can access the following URL with web browser.
 ```
-http://192.168.0.111:9091/
+http://192.168.0.111:9092/
 ```
 
 <img src="./images/prometheus-top.png" title="./images/prometheus-top.png" width=900px></img>
@@ -153,6 +188,12 @@ amf_session 0
 # TYPE gnb gauge
 gnb 0
 
+# HELP fivegs_amffunction_rm_registeredsubnbr Number of registered state subscribers per AMF
+# TYPE fivegs_amffunction_rm_registeredsubnbr gauge
+
+# HELP fivegs_amffunction_rm_reginitfail Number of failed initial registrations at the AMF
+# TYPE fivegs_amffunction_rm_reginitfail counter
+
 # HELP process_max_fds Maximum number of open file descriptors.
 # TYPE process_max_fds gauge
 process_max_fds 1024
@@ -163,24 +204,73 @@ process_virtual_memory_max_bytes -1
 
 # HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
 # TYPE process_cpu_seconds_total gauge
-process_cpu_seconds_total 3
+process_cpu_seconds_total 1
 
 # HELP process_virtual_memory_bytes Virtual memory size in bytes.
 # TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 152248320
+process_virtual_memory_bytes 157409280
 
 # HELP process_resident_memory_bytes Resident memory size in bytes.
 # TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 19255296
+process_resident_memory_bytes 13733888
 
 # HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
 # TYPE process_start_time_seconds gauge
-process_start_time_seconds 515230
+process_start_time_seconds 90461
 
 # HELP process_open_fds Number of open file descriptors.
 # TYPE process_open_fds gauge
 process_open_fds 24
 ```
+
+<h3 id="pcf_metrics">Metrics of Open5GS PCF</h3>
+
+Following the Endpoint link of job_name=**open5gs-pcfd**, the metrics will be displayed as follows.
+```sh
+# HELP fivegs_pcffunction_pa_policyamassoreq Number of AM policy association requests
+# TYPE fivegs_pcffunction_pa_policyamassoreq counter
+
+# HELP fivegs_pcffunction_pa_policyamassosucc Number of successful AM policy associations
+# TYPE fivegs_pcffunction_pa_policyamassosucc counter
+
+# HELP fivegs_pcffunction_pa_policysmassoreq Number of SM policy association requests
+# TYPE fivegs_pcffunction_pa_policysmassoreq counter
+
+# HELP fivegs_pcffunction_pa_policysmassosucc Number of successful SM policy associations
+# TYPE fivegs_pcffunction_pa_policysmassosucc counter
+
+# HELP fivegs_pcffunction_pa_sessionnbr Active Sessions
+# TYPE fivegs_pcffunction_pa_sessionnbr gauge
+
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1024
+
+# HELP process_virtual_memory_max_bytes Maximum amount of virtual memory available in bytes.
+# TYPE process_virtual_memory_max_bytes gauge
+process_virtual_memory_max_bytes -1
+
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total gauge
+process_cpu_seconds_total 1
+
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 188592128
+
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 12910592
+
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 90461
+
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 15
+```
+
 <h3 id="smf_metrics">Metrics of Open5GS SMF</h3>
 
 Following the Endpoint link of job_name=**open5gs-smfd1**, the metrics will be displayed as follows.
@@ -196,6 +286,10 @@ gn_rx_deletepdpcontextreq 0
 # HELP gtp1_pdpctxs_active Active GTPv1 PDP Contexts (GGSN)
 # TYPE gtp1_pdpctxs_active gauge
 gtp1_pdpctxs_active 0
+
+# HELP fivegs_smffunction_sm_n4sessionreport Number of requested N4 session reports evidented by SMF
+# TYPE fivegs_smffunction_sm_n4sessionreport counter
+fivegs_smffunction_sm_n4sessionreport 0
 
 # HELP ues_active Active User Equipments
 # TYPE ues_active gauge
@@ -224,15 +318,16 @@ gtp_new_node_failed 0
 # TYPE s5c_rx_parse_failed counter
 s5c_rx_parse_failed 0
 
-# HELP sessions_active Active Sessions
-# TYPE sessions_active gauge
-sessions_active 0
+# HELP fivegs_smffunction_sm_n4sessionreportsucc Number of successful N4 session reports evidented by SMF
+# TYPE fivegs_smffunction_sm_n4sessionreportsucc counter
+fivegs_smffunction_sm_n4sessionreportsucc 0
 
 # HELP gtp_node_gn_rx_createpdpcontextreq Received GTPv1C CreatePDPContextRequest messages
 # TYPE gtp_node_gn_rx_createpdpcontextreq counter
 
-# HELP gtp_node_gn_rx_deletepdpcontextreq Received GTPv1C DeletePDPContextRequest messages
-# TYPE gtp_node_gn_rx_deletepdpcontextreq counter
+# HELP fivegs_smffunction_sm_n4sessionestabreq Number of requested N4 session establishments evidented by SMF
+# TYPE fivegs_smffunction_sm_n4sessionestabreq counter
+fivegs_smffunction_sm_n4sessionestabreq 0
 
 # HELP bearers_active Active Bearers
 # TYPE bearers_active gauge
@@ -242,18 +337,30 @@ bearers_active 0
 # TYPE gn_rx_parse_failed counter
 gn_rx_parse_failed 0
 
-# HELP gtp_node_s5c_rx_parse_failed Received GTPv2C messages discarded due to parsing failure
-# TYPE gtp_node_s5c_rx_parse_failed counter
-
 # HELP gtp_peers_active Active GTP peers
 # TYPE gtp_peers_active gauge
 gtp_peers_active 0
+
+# HELP gtp_node_gn_rx_deletepdpcontextreq Received GTPv1C DeletePDPContextRequest messages
+# TYPE gtp_node_gn_rx_deletepdpcontextreq counter
+
+# HELP gtp_node_s5c_rx_parse_failed Received GTPv2C messages discarded due to parsing failure
+# TYPE gtp_node_s5c_rx_parse_failed counter
 
 # HELP gtp_node_s5c_rx_createsession Received GTPv2C CreateSessionRequest messages
 # TYPE gtp_node_s5c_rx_createsession counter
 
 # HELP gtp_node_s5c_rx_deletesession Received GTPv2C DeleteSessionRequest messages
 # TYPE gtp_node_s5c_rx_deletesession counter
+
+# HELP fivegs_smffunction_sm_sessionnbr Active Sessions
+# TYPE fivegs_smffunction_sm_sessionnbr gauge
+
+# HELP fivegs_smffunction_sm_qos_flow_nbr Number of QoS flows at the SMF
+# TYPE fivegs_smffunction_sm_qos_flow_nbr gauge
+
+# HELP fivegs_smffunction_sm_n4sessionestabfail Number of failed N4 session establishments evidented by SMF
+# TYPE fivegs_smffunction_sm_n4sessionestabfail counter
 
 # HELP process_max_fds Maximum number of open file descriptors.
 # TYPE process_max_fds gauge
@@ -265,23 +372,92 @@ process_virtual_memory_max_bytes -1
 
 # HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
 # TYPE process_cpu_seconds_total gauge
-process_cpu_seconds_total 7
+process_cpu_seconds_total 2
 
 # HELP process_virtual_memory_bytes Virtual memory size in bytes.
 # TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 1169731584
+process_virtual_memory_bytes 1174093824
 
 # HELP process_resident_memory_bytes Resident memory size in bytes.
 # TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 45481984
+process_resident_memory_bytes 36618240
 
 # HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
 # TYPE process_start_time_seconds gauge
-process_start_time_seconds 515230
+process_start_time_seconds 90461
 
 # HELP process_open_fds Number of open file descriptors.
 # TYPE process_open_fds gauge
 process_open_fds 21
+```
+
+<h3 id="upf_metrics">Metrics of Open5GS UPF</h3>
+
+Following the Endpoint link of job_name=**open5gs-upfd1**, the metrics will be displayed as follows.
+```sh
+# HELP fivegs_ep_n3_gtp_indatapktn3upf Number of incoming GTP data packets on the N3 interface
+# TYPE fivegs_ep_n3_gtp_indatapktn3upf counter
+fivegs_ep_n3_gtp_indatapktn3upf 0
+
+# HELP fivegs_ep_n3_gtp_outdatapktn3upf Number of outgoing GTP data packets on the N3 interface
+# TYPE fivegs_ep_n3_gtp_outdatapktn3upf counter
+fivegs_ep_n3_gtp_outdatapktn3upf 0
+
+# HELP fivegs_upffunction_sm_n4sessionestabreq Number of requested N4 session establishments
+# TYPE fivegs_upffunction_sm_n4sessionestabreq counter
+fivegs_upffunction_sm_n4sessionestabreq 0
+
+# HELP fivegs_upffunction_sm_n4sessionreport Number of requested N4 session reports
+# TYPE fivegs_upffunction_sm_n4sessionreport counter
+fivegs_upffunction_sm_n4sessionreport 0
+
+# HELP fivegs_upffunction_sm_n4sessionreportsucc Number of successful N4 session reports
+# TYPE fivegs_upffunction_sm_n4sessionreportsucc counter
+fivegs_upffunction_sm_n4sessionreportsucc 0
+
+# HELP fivegs_upffunction_upf_sessionnbr Active Sessions
+# TYPE fivegs_upffunction_upf_sessionnbr gauge
+fivegs_upffunction_upf_sessionnbr 0
+
+# HELP fivegs_ep_n3_gtp_indatavolumeqosleveln3upf Data volume of incoming GTP data packets per QoS level on the N3 interface
+# TYPE fivegs_ep_n3_gtp_indatavolumeqosleveln3upf counter
+
+# HELP fivegs_ep_n3_gtp_outdatavolumeqosleveln3upf Data volume of outgoing GTP data packets per QoS level on the N3 interface
+# TYPE fivegs_ep_n3_gtp_outdatavolumeqosleveln3upf counter
+
+# HELP fivegs_upffunction_sm_n4sessionestabfail Number of failed N4 session establishments
+# TYPE fivegs_upffunction_sm_n4sessionestabfail counter
+
+# HELP fivegs_upffunction_upf_qosflows Number of QoS flows of UPF
+# TYPE fivegs_upffunction_upf_qosflows gauge
+
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1024
+
+# HELP process_virtual_memory_max_bytes Maximum amount of virtual memory available in bytes.
+# TYPE process_virtual_memory_max_bytes gauge
+process_virtual_memory_max_bytes -1
+
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total gauge
+process_cpu_seconds_total 1
+
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 279085056
+
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 24313856
+
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 36717
+
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 13
 ```
 
 <h2 id="run_grafana">Run Grafana</h2>
@@ -304,9 +480,9 @@ http://192.168.0.111:3001/
 
 The data source name, URL, and access mode are as follows.
 I used the defaults for other than these as is.
-| Name | URL | Access Mode |
-| --- | --- | --- |
-| Open5GS | `http://192.168.0.111:9091/` | Server |
+| Name | URL |
+| --- | --- |
+| Open5GS | `http://192.168.0.111:9092/` |
 
 <img src="./images/grafana-ds.png" title="./images/grafana-ds.png" width=900px></img>
 
@@ -328,4 +504,5 @@ I would like to thank the excellent developers and all the contributors of Open5
 
 <h2 id="changelog">Changelog (summary)</h2>
 
+- [2022.12.11] Added PCF and UPF metrics
 - [2022.08.07] Initial release.
