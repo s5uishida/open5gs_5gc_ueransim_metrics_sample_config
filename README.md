@@ -19,7 +19,7 @@ The metrics are as of 2022.12.11. I think the new metrics will be added in the f
 <h2 id="toc">Table of Contents</h2>
 
 - [Overview of Open5GS 5GC Simulation Mobile Network](#overview)
-- [Additional changes in configuration files of Open5GS 5GC C-Plane](#changes_cp)
+- [Additional changes in configuration files of Open5GS 5GC C-Plane and U-Plane](#changes_cp)
 - [Build Open5GS for using Prometheus](#build)
 - [Run Prometheus](#run_prometheus)
   - [Web Access to Prometheus Dashboard](#access_prometheus)
@@ -66,14 +66,14 @@ The exposed IP address and port of Prometheus and Grafana-OSS are as follows.
 | Prometheus |  192.168.0.111 | 9092/tcp |
 | Grafana-OSS |  192.168.0.111 | 3001/tcp |
 
-<h2 id="changes_cp">Additional changes in configuration files of Open5GS 5GC C-Plane</h2>
+<h2 id="changes_cp">Additional changes in configuration files of Open5GS 5GC C-Plane and U-Plane</h2>
 
 In this case, the following configuration is further changed for monitoring the metrics with Prometheus.
 
 - [Open5GS 5GC & UERANSIM UE / RAN Sample Configuration - Select UPF based on S-NSSAI](https://github.com/s5uishida/open5gs_5gc_ueransim_snssai_upf_sample_config)
 
 I will explain what to set additionally here.
-When monitoring the metrics with Prometheus, change the following configuration files for each NF of C-Plane.
+When monitoring the metrics with Prometheus, change the following configuration files for each NF of C-Plane and U-Plane.
 - `open5gs/install/etc/open5gs/amf.yaml`
 ```
 ...
