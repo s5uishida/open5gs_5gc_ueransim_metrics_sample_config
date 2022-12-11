@@ -102,14 +102,14 @@ metrics:
   - addr: 192.168.0.113
     port: 9090
 ```
-- `open5gs/install/etc/open5gs/upf1.yaml`
+- `open5gs/install/etc/open5gs/upf.yaml` for UPF1
 ```
 ...
 metrics:
   - addr: 192.168.0.114
     port: 9090
 ```
-- `open5gs/install/etc/open5gs/upf2.yaml`
+- `open5gs/install/etc/open5gs/upf.yaml` for UPF2
 ```
 ...
 metrics:
