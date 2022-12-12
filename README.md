@@ -119,7 +119,7 @@ metrics:
 
 <h2 id="build">Build Open5GS for using Prometheus</h2>
 
-Please refer to the following for building Open5GS for using Prometheus.
+Open5GS sets Prometheus metrics by default. Please refer to the following for building Open5GS.
 - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
 
 Please install the following to run Prometheus on Docker.
