@@ -504,5 +504,5 @@ I would like to thank the excellent developers and all the contributors of Open5
 
 <h2 id="changelog">Changelog (summary)</h2>
 
-- [2022.12.11] Added PCF and UPF metrics
+- [2022.12.11] Added PCF and UPF metrics.
 - [2022.08.07] Initial release.
