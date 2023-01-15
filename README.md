@@ -47,7 +47,7 @@ NFs without metrics are not drawn in the figure.
 
 The 5GC / UE / RAN used are as follows.
 Also, I started Prometheus and Grafana using Docker.
-- 5GC - Open5GS v2.5.6 - https://github.com/open5gs/open5gs
+- 5GC - Open5GS v2.5.6 (2022.12.11) - https://github.com/open5gs/open5gs
 - UE / RAN - UERANSIM v3.2.6 - https://github.com/aligungr/UERANSIM
 
 The IP address and port of the monitored NFs are as follows.
