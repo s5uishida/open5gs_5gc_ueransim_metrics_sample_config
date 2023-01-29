@@ -13,6 +13,7 @@ The metrics are as of 2022.12.11. I think the new metrics will be added in the f
 5. [SCP Indirect communication Model C](https://github.com/s5uishida/open5gs_5gc_ueransim_scp_model_c_sample_config)
 6. [VoLTE and SMS Configuration for docker_open5gs](https://github.com/s5uishida/docker_open5gs_volte_sms_config)
 7. Monitoring Metrics with Prometheus (this article)
+8. [Framed Routing](https://github.com/s5uishida/open5gs_5gc_ueransim_framed_routing_sample_config)
 
 ---
 
