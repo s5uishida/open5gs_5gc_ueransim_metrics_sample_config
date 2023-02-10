@@ -14,7 +14,11 @@ The metrics are as of 2022.12.11. I think the new metrics will be added in the f
 6. [VoLTE and SMS Configuration for docker_open5gs](https://github.com/s5uishida/docker_open5gs_volte_sms_config)
 7. Monitoring Metrics with Prometheus (this article)
 8. [Framed Routing](https://github.com/s5uishida/open5gs_5gc_ueransim_framed_routing_sample_config)
+---
 
+<h2 id="misc">Miscellaneous Notes</h2>
+
+- [Install MongoDB 6.0 and Open5GS WebUI](https://github.com/s5uishida/open5gs_install_mongodb6_webui)
 ---
 
 <h2 id="toc">Table of Contents</h2>
