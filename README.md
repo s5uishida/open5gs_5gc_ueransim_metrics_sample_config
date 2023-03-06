@@ -1,6 +1,6 @@
 # Open5GS 5GC & UERANSIM UE / RAN Sample Configuration - Monitoring Metrics with Prometheus
 This describes a very simple configuration that uses Open5GS and UERANSIM for monitoring the metrics with Prometheus.
-The metrics are as of 2022.12.11. I think the new metrics will be added in the future.
+The metrics are as of 2023.03.06. I think the new metrics will be added in the future.
 
 ---
 
@@ -52,7 +52,7 @@ NFs without metrics are not drawn in the figure.
 
 The 5GC / UE / RAN used are as follows.
 Also, I started Prometheus and Grafana using Docker.
-- 5GC - Open5GS v2.5.6 (2022.12.11) - https://github.com/open5gs/open5gs
+- 5GC - Open5GS v2.6.0 (2023.03.06) - https://github.com/open5gs/open5gs
 - UE / RAN - UERANSIM v3.2.6 - https://github.com/aligungr/UERANSIM
 
 The IP address and port of the monitored NFs are as follows.
@@ -181,23 +181,91 @@ The list of targets is as follows.
 
 Following the Endpoint link of job_name=**open5gs-amfd**, the metrics will be displayed as follows.
 ```sh
-# HELP ran_ue RAN UEs
-# TYPE ran_ue gauge
-ran_ue 0
+# HELP gnb gNodeBs
+# TYPE gnb gauge
+gnb 0
+
+# HELP fivegs_amffunction_mm_confupdate Number of UE Configuration Update commands requested by the AMF
+# TYPE fivegs_amffunction_mm_confupdate counter
+fivegs_amffunction_mm_confupdate 0
+
+# HELP fivegs_amffunction_rm_reginitreq Number of initial registration requests received by the AMF
+# TYPE fivegs_amffunction_rm_reginitreq counter
+fivegs_amffunction_rm_reginitreq 0
+
+# HELP fivegs_amffunction_rm_regemergreq Number of emergency registration requests received by the AMF
+# TYPE fivegs_amffunction_rm_regemergreq counter
+fivegs_amffunction_rm_regemergreq 0
+
+# HELP fivegs_amffunction_mm_paging5greq Number of 5G paging procedures initiated at the AMF
+# TYPE fivegs_amffunction_mm_paging5greq counter
+fivegs_amffunction_mm_paging5greq 0
+
+# HELP fivegs_amffunction_rm_regperiodreq Number of periodic registration update requests received by the AMF
+# TYPE fivegs_amffunction_rm_regperiodreq counter
+fivegs_amffunction_rm_regperiodreq 0
+
+# HELP fivegs_amffunction_mm_confupdatesucc Number of UE Configuration Update complete messages received by the AMF
+# TYPE fivegs_amffunction_mm_confupdatesucc counter
+fivegs_amffunction_mm_confupdatesucc 0
+
+# HELP fivegs_amffunction_rm_reginitsucc Number of successful initial registrations at the AMF
+# TYPE fivegs_amffunction_rm_reginitsucc counter
+fivegs_amffunction_rm_reginitsucc 0
+
+# HELP fivegs_amffunction_amf_authreject Number of authentication rejections sent by the AMF
+# TYPE fivegs_amffunction_amf_authreject counter
+fivegs_amffunction_amf_authreject 0
+
+# HELP fivegs_amffunction_rm_regmobreq Number of mobility registration update requests received by the AMF
+# TYPE fivegs_amffunction_rm_regmobreq counter
+fivegs_amffunction_rm_regmobreq 0
 
 # HELP amf_session AMF Sessions
 # TYPE amf_session gauge
 amf_session 0
 
-# HELP gnb gNodeBs
-# TYPE gnb gauge
-gnb 0
+# HELP fivegs_amffunction_rm_regmobsucc Number of successful mobility registration updates at the AMF
+# TYPE fivegs_amffunction_rm_regmobsucc counter
+fivegs_amffunction_rm_regmobsucc 0
+
+# HELP fivegs_amffunction_amf_authreq Number of authentication requests sent by the AMF
+# TYPE fivegs_amffunction_amf_authreq counter
+fivegs_amffunction_amf_authreq 0
+
+# HELP fivegs_amffunction_rm_regemergsucc Number of successful emergency registrations at the AMF
+# TYPE fivegs_amffunction_rm_regemergsucc counter
+fivegs_amffunction_rm_regemergsucc 0
+
+# HELP fivegs_amffunction_mm_paging5gsucc Number of successful 5G paging procedures initiated at the AMF
+# TYPE fivegs_amffunction_mm_paging5gsucc counter
+fivegs_amffunction_mm_paging5gsucc 0
+
+# HELP ran_ue RAN UEs
+# TYPE ran_ue gauge
+ran_ue 0
+
+# HELP fivegs_amffunction_rm_regperiodsucc Number of successful periodic registration update requests at the AMF
+# TYPE fivegs_amffunction_rm_regperiodsucc counter
+fivegs_amffunction_rm_regperiodsucc 0
 
 # HELP fivegs_amffunction_rm_registeredsubnbr Number of registered state subscribers per AMF
 # TYPE fivegs_amffunction_rm_registeredsubnbr gauge
 
 # HELP fivegs_amffunction_rm_reginitfail Number of failed initial registrations at the AMF
 # TYPE fivegs_amffunction_rm_reginitfail counter
+
+# HELP fivegs_amffunction_rm_regmobfail Number of failed mobility registration updates at the AMF
+# TYPE fivegs_amffunction_rm_regmobfail counter
+
+# HELP fivegs_amffunction_rm_regperiodfail Number of failed periodic registration update requests at the AMF
+# TYPE fivegs_amffunction_rm_regperiodfail counter
+
+# HELP fivegs_amffunction_rm_regemergfail Number of failed emergency registrations at the AMF
+# TYPE fivegs_amffunction_rm_regemergfail counter
+
+# HELP fivegs_amffunction_amf_authfail Number of authentication failure messages received by the AMF
+# TYPE fivegs_amffunction_amf_authfail counter
 
 # HELP process_max_fds Maximum number of open file descriptors.
 # TYPE process_max_fds gauge
@@ -209,23 +277,23 @@ process_virtual_memory_max_bytes -1
 
 # HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
 # TYPE process_cpu_seconds_total gauge
-process_cpu_seconds_total 1
+process_cpu_seconds_total 0
 
 # HELP process_virtual_memory_bytes Virtual memory size in bytes.
 # TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 157409280
+process_virtual_memory_bytes 159555584
 
 # HELP process_resident_memory_bytes Resident memory size in bytes.
 # TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 13733888
+process_resident_memory_bytes 17182720
 
 # HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
 # TYPE process_start_time_seconds gauge
-process_start_time_seconds 90461
+process_start_time_seconds 61727
 
 # HELP process_open_fds Number of open file descriptors.
 # TYPE process_open_fds gauge
-process_open_fds 24
+process_open_fds 23
 ```
 
 <h3 id="pcf_metrics">Metrics of Open5GS PCF</h3>
@@ -257,23 +325,23 @@ process_virtual_memory_max_bytes -1
 
 # HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
 # TYPE process_cpu_seconds_total gauge
-process_cpu_seconds_total 1
+process_cpu_seconds_total 0
 
 # HELP process_virtual_memory_bytes Virtual memory size in bytes.
 # TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 188592128
+process_virtual_memory_bytes 192069632
 
 # HELP process_resident_memory_bytes Resident memory size in bytes.
 # TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 12910592
+process_resident_memory_bytes 18964480
 
 # HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
 # TYPE process_start_time_seconds gauge
-process_start_time_seconds 90461
+process_start_time_seconds 61727
 
 # HELP process_open_fds Number of open file descriptors.
 # TYPE process_open_fds gauge
-process_open_fds 15
+process_open_fds 14
 ```
 
 <h3 id="smf_metrics">Metrics of Open5GS SMF</h3>
@@ -377,23 +445,23 @@ process_virtual_memory_max_bytes -1
 
 # HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
 # TYPE process_cpu_seconds_total gauge
-process_cpu_seconds_total 2
+process_cpu_seconds_total 0
 
 # HELP process_virtual_memory_bytes Virtual memory size in bytes.
 # TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 1174093824
+process_virtual_memory_bytes 1180213248
 
 # HELP process_resident_memory_bytes Resident memory size in bytes.
 # TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 36618240
+process_resident_memory_bytes 40980480
 
 # HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
 # TYPE process_start_time_seconds gauge
-process_start_time_seconds 90461
+process_start_time_seconds 61727
 
 # HELP process_open_fds Number of open file descriptors.
 # TYPE process_open_fds gauge
-process_open_fds 21
+process_open_fds 20
 ```
 
 <h3 id="upf_metrics">Metrics of Open5GS UPF</h3>
@@ -446,23 +514,23 @@ process_virtual_memory_max_bytes -1
 
 # HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
 # TYPE process_cpu_seconds_total gauge
-process_cpu_seconds_total 1
+process_cpu_seconds_total 0
 
 # HELP process_virtual_memory_bytes Virtual memory size in bytes.
 # TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 279085056
+process_virtual_memory_bytes 286445568
 
 # HELP process_resident_memory_bytes Resident memory size in bytes.
 # TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 24313856
+process_resident_memory_bytes 25284608
 
 # HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
 # TYPE process_start_time_seconds gauge
-process_start_time_seconds 36717
+process_start_time_seconds 58513
 
 # HELP process_open_fds Number of open file descriptors.
 # TYPE process_open_fds gauge
-process_open_fds 13
+process_open_fds 12
 ```
 
 <h2 id="run_grafana">Run Grafana</h2>
@@ -509,5 +577,6 @@ I would like to thank the excellent developers and all the contributors of Open5
 
 <h2 id="changelog">Changelog (summary)</h2>
 
+- [2023.03.06] Added more AMF metrics.
 - [2022.12.11] Added PCF and UPF metrics.
 - [2022.08.07] Initial release.
