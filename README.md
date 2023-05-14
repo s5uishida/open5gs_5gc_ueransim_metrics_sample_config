@@ -21,6 +21,7 @@ The metrics are as of 2023.03.06. I think the new metrics will be added in the f
 <h2 id="misc">Miscellaneous Notes</h2>
 
 - [Install MongoDB 6.0 and Open5GS WebUI](https://github.com/s5uishida/open5gs_install_mongodb6_webui)
+- [A Note for 5G SUCI Profile A/B Scheme](https://github.com/s5uishida/note_5g_suci_profile_ab)
 ---
 
 <h2 id="toc">Table of Contents</h2>
