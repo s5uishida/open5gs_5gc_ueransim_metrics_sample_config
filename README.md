@@ -4,7 +4,9 @@ The metrics are as of 2023.03.06. I think the new metrics will be added in the f
 
 ---
 
-<h2 id="conf_list">List of Sample Configurations</h2>
+<a id="conf_list"></a>
+
+## List of Sample Configurations
 
 1. [One SGW-C/PGW-C, one SGW-U/PGW-U and one APN](https://github.com/s5uishida/open5gs_epc_srsran_sample_config)
 2. [One SGW-C/PGW-C, Multiple SGW-Us/PGW-Us and APNs](https://github.com/s5uishida/open5gs_epc_oai_sample_config)
@@ -21,7 +23,9 @@ The metrics are as of 2023.03.06. I think the new metrics will be added in the f
 13. [VPP-UPF with DPDK](https://github.com/s5uishida/open5gs_5gc_ueransim_vpp_upf_dpdk_sample_config)
 ---
 
-<h2 id="misc">Miscellaneous Notes</h2>
+<a id="misc"></a>
+
+## Miscellaneous Notes
 
 - [Install MongoDB 6.0 and Open5GS WebUI](https://github.com/s5uishida/open5gs_install_mongodb6_webui)
 - [Install MongoDB 4.4.18 on Ubuntu 20.04 for Raspberry Pi 4B](https://github.com/s5uishida/install_mongodb_on_ubuntu_for_rp4b)
@@ -29,7 +33,9 @@ The metrics are as of 2023.03.06. I think the new metrics will be added in the f
 - [A Note for Changing Network Interface of UPF from TUN to TAP in Open5GS](https://github.com/s5uishida/change_from_tun_to_tap_in_open5gs)
 ---
 
-<h2 id="toc">Table of Contents</h2>
+<a id="toc"></a>
+
+## Table of Contents
 
 - [Overview of Open5GS 5GC Simulation Mobile Network](#overview)
 - [Additional changes in configuration files of Open5GS 5GC C-Plane and U-Plane](#changes_cp)
@@ -47,7 +53,9 @@ The metrics are as of 2023.03.06. I think the new metrics will be added in the f
 - [Changelog (summary)](#changelog)
 
 ---
-<h2 id="overview">Overview of Open5GS 5GC Simulation Mobile Network</h2>
+<a id="overview"></a>
+
+## Overview of Open5GS 5GC Simulation Mobile Network
 
 This is an additional setting example when monitoring the metrics with Prometheus for the following sample configuration.
 
@@ -79,7 +87,9 @@ The exposed IP address and port of Prometheus and Grafana-OSS are as follows.
 | Prometheus |  192.168.0.111 | 9092/tcp |
 | Grafana-OSS |  192.168.0.111 | 3001/tcp |
 
-<h2 id="changes_cp">Additional changes in configuration files of Open5GS 5GC C-Plane and U-Plane</h2>
+<a id="changes_cp"></a>
+
+## Additional changes in configuration files of Open5GS 5GC C-Plane and U-Plane
 
 In this case, the following configuration is further changed for monitoring the metrics with Prometheus.
 
@@ -130,7 +140,9 @@ metrics:
     port: 9090
 ```
 
-<h2 id="build">Build Open5GS for using Prometheus</h2>
+<a id="build"></a>
+
+## Build Open5GS for using Prometheus
 
 Open5GS sets Prometheus metrics by default. Please refer to the following for building Open5GS.
 - https://open5gs.org/open5gs/docs/guide/02-building-open5gs-from-sources/
@@ -138,12 +150,16 @@ Open5GS sets Prometheus metrics by default. Please refer to the following for bu
 Please install the following to run Prometheus on Docker.
 - [docker-ce](https://docs.docker.com/install/linux/docker-ce/ubuntu)
 
-<h2 id="run_prometheus">Run Prometheus</h2>
+<a id="run_prometheus"></a>
+
+## Run Prometheus
 
 Please refer to the following for using Prometheus.
 - https://open5gs.org/open5gs/docs/tutorial/04-metrics-prometheus/
 
-<h3 id="access_prometheus">Web Access to Prometheus Dashboard</h3>
+<a id="access_prometheus"></a>
+
+### Web Access to Prometheus Dashboard
 
 First, create the following `prometheus.yml`.
 ```yaml
@@ -185,7 +201,9 @@ The list of targets is as follows.
 
 <img src="./images/prometheus-targets.png" title="./images/prometheus-targets.png" width=900px></img>
 
-<h3 id="amf_metrics">Metrics of Open5GS AMF</h3>
+<a id="amf_metrics"></a>
+
+### Metrics of Open5GS AMF
 
 Following the Endpoint link of job_name=**open5gs-amfd**, the metrics will be displayed as follows.
 ```sh
@@ -304,7 +322,9 @@ process_start_time_seconds 61727
 process_open_fds 23
 ```
 
-<h3 id="pcf_metrics">Metrics of Open5GS PCF</h3>
+<a id="pcf_metrics"></a>
+
+### Metrics of Open5GS PCF
 
 Following the Endpoint link of job_name=**open5gs-pcfd**, the metrics will be displayed as follows.
 ```sh
@@ -352,7 +372,9 @@ process_start_time_seconds 61727
 process_open_fds 14
 ```
 
-<h3 id="smf_metrics">Metrics of Open5GS SMF</h3>
+<a id="smf_metrics"></a>
+
+### Metrics of Open5GS SMF
 
 Following the Endpoint link of job_name=**open5gs-smfd1**, the metrics will be displayed as follows.
 ```sh
@@ -472,7 +494,9 @@ process_start_time_seconds 61727
 process_open_fds 20
 ```
 
-<h3 id="upf_metrics">Metrics of Open5GS UPF</h3>
+<a id="upf_metrics"></a>
+
+### Metrics of Open5GS UPF
 
 Following the Endpoint link of job_name=**open5gs-upfd1**, the metrics will be displayed as follows.
 ```sh
@@ -541,11 +565,15 @@ process_start_time_seconds 58513
 process_open_fds 12
 ```
 
-<h2 id="run_grafana">Run Grafana</h2>
+<a id="run_grafana"></a>
+
+## Run Grafana
 
 I used the OSS version of Grafana.
 
-<h3 id="access_grafana">Web Access to Grafana Dashboard</h3>
+<a id="access_grafana"></a>
+
+### Web Access to Grafana Dashboard
 
 After starting Open5GS and Prometheus, run Grafana-OSS as follows.
 ```
@@ -557,7 +585,9 @@ The default username and password are both `admin`.
 http://192.168.0.111:3001/
 ```
 
-<h3 id="data_source">Prometheus data source</h3>
+<a id="data_source"></a>
+
+### Prometheus data source
 
 The data source name, URL, and access mode are as follows.
 I used the defaults for other than these as is.
@@ -567,7 +597,9 @@ I used the defaults for other than these as is.
 
 <img src="./images/grafana-ds.png" title="./images/grafana-ds.png" width=900px></img>
 
-<h3 id="set_metric">Example of setting visualization of metrics</h3>
+<a id="set_metric"></a>
+
+### Example of setting visualization of metrics
 
 Create your first dashboard and a panel for each metric you want to visualize.
 In the `Metrics browser`, select the job and its metrics to visualize from the three job_names, set panel properties, add panels, and create the dashboard.
@@ -583,7 +615,9 @@ I was able to confirm the very simple configuration that uses Open5GS and UERANS
 Also, when using Open5GS as EPC, MME(`open5gs-mmed`) supports Prometheus metrics, so you can monitor these metrics by making similar settings.
 I would like to thank the excellent developers and all the contributors of Open5GS, UERANSIM, Prometheus and Grafana.
 
-<h2 id="changelog">Changelog (summary)</h2>
+<a id="changelog"></a>
+
+## Changelog (summary)
 
 - [2023.03.06] Added more AMF metrics.
 - [2022.12.11] Added PCF and UPF metrics.
