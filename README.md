@@ -252,6 +252,7 @@ fivegs_amffunction_rm_regperiodsucc 0
 
 # HELP fivegs_amffunction_rm_registeredsubnbr Number of registered state subscribers per AMF
 # TYPE fivegs_amffunction_rm_registeredsubnbr gauge
+fivegs_amffunction_rm_registeredsubnbr 0
 
 # HELP fivegs_amffunction_rm_reginitfail Number of failed initial registrations at the AMF
 # TYPE fivegs_amffunction_rm_reginitfail counter
@@ -267,6 +268,7 @@ fivegs_amffunction_rm_regperiodsucc 0
 
 # HELP fivegs_amffunction_amf_authfail Number of authentication failure messages received by the AMF
 # TYPE fivegs_amffunction_amf_authfail counter
+fivegs_amffunction_amf_authfail 0
 
 # HELP process_max_fds Maximum number of open file descriptors.
 # TYPE process_max_fds gauge
@@ -305,18 +307,23 @@ Following the Endpoint link of job_name=**open5gs-pcfd**, the metrics will be di
 ```sh
 # HELP fivegs_pcffunction_pa_policyamassoreq Number of AM policy association requests
 # TYPE fivegs_pcffunction_pa_policyamassoreq counter
+fivegs_pcffunction_pa_policyamassoreq 0
 
 # HELP fivegs_pcffunction_pa_policyamassosucc Number of successful AM policy associations
 # TYPE fivegs_pcffunction_pa_policyamassosucc counter
+fivegs_pcffunction_pa_policyamassosucc 0
 
 # HELP fivegs_pcffunction_pa_policysmassoreq Number of SM policy association requests
 # TYPE fivegs_pcffunction_pa_policysmassoreq counter
+fivegs_pcffunction_pa_policysmassoreq 0
 
 # HELP fivegs_pcffunction_pa_policysmassosucc Number of successful SM policy associations
 # TYPE fivegs_pcffunction_pa_policysmassosucc counter
+fivegs_pcffunction_pa_policysmassosucc 0
 
 # HELP fivegs_pcffunction_pa_sessionnbr Active Sessions
 # TYPE fivegs_pcffunction_pa_sessionnbr gauge
+fivegs_pcffunction_pa_sessionnbr 0
 
 # HELP process_max_fds Maximum number of open file descriptors.
 # TYPE process_max_fds gauge
@@ -510,6 +517,7 @@ fivegs_upffunction_upf_sessionnbr 0
 
 # HELP fivegs_upffunction_upf_qosflows Number of QoS flows of UPF
 # TYPE fivegs_upffunction_upf_qosflows gauge
+fivegs_upffunction_upf_qosflows 0
 
 # HELP process_max_fds Maximum number of open file descriptors.
 # TYPE process_max_fds gauge
@@ -594,6 +602,7 @@ I would like to thank the excellent developers and all the contributors of Open5
 
 ## Changelog (summary)
 
+- [2023.10.19] Updated PCF, UPF and AMF metrics.
 - [2023.03.06] Added more AMF metrics.
 - [2022.12.11] Added PCF and UPF metrics.
 - [2022.08.07] Initial release.
